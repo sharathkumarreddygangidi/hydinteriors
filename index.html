@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYDinteriors</title>
+
+<style>
+body{margin:0;font-family:'Segoe UI',sans-serif;background:#f4f6f9}
+
+/* ===== HEADER ===== */
+header{
+    background:#111827;
+    color:white;
+    padding:15px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+/* LOGO */
+.logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logo-icon{
+    width:40px;height:40px;
+    background:#2563eb;
+    border-radius:6px;
+    position:relative;
+}
+
+.logo-icon:before{
+    content:'';
+    position:absolute;
+    bottom:8px;
+    left:8px;
+    width:24px;height:12px;
+    background:white;
+    border-radius:4px;
+}
+
+.logo-icon:after{
+    content:'';
+    position:absolute;
+    top:6px;
+    left:6px;
+    width:28px;height:20px;
+    border:2px solid white;
+    border-bottom:none;
+}
+
+.logo h2{margin:0}
+.logo span{color:#10b981}
+
+nav button{
+    margin-left:10px;
+    padding:6px 12px;
+    border:none;
+    background:#2563eb;
+    color:white;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+/* HERO SEARCH */
+.hero{
+    background:white;
+    padding:40px 20px;
+    text-align:center;
+    box-shadow:0 3px 8px rgba(0,0,0,0.1);
+}
+
+.hero input{
+    width:60%;
+    max-width:500px;
+    padding:12px;
+    border-radius:8px;
+    border:2px solid #2563eb;
+    font-size:16px;
+}
+
+.hero button{
+    padding:12px 18px;
+    border:none;
+    background:#10b981;
+    color:white;
+    border-radius:8px;
+    margin-left:10px;
+    cursor:pointer;
+}
+
+/* FILTER BAR */
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    padding:15px 20px;
+    background:#fff;
+    align-items:center;
+}
+
+select{
+    padding:8px;border-radius:6px;border:1px solid #ccc
+}
+
+.clear-btn{
+    background:#ef4444;color:white;border:none;padding:8px;border-radius:5px
+}
+
+/* VIEW TOGGLE */
+.view-toggle{
+    margin-left:auto;
+    background:#e5e7eb;
+    padding:5px;
+    border-radius:8px;
+}
+
+.view-toggle button{
+    border:none;padding:6px 10px;border-radius:6px;background:transparent;font-weight:bold;cursor:pointer
+}
+
+.view-toggle .active{
+    background:#2563eb;color:white
+}
+
+/* RESULTS */
+#resultsCount{padding:10px 20px;font-weight:bold;color:#2563eb}
+
+/* GRID */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:20px;
+    padding:20px;
+}
+
+/* LIST */
+.list{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    padding:20px;
+}
+
+/* CARD */
+.card{
+    background:white;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.1);
+    overflow:hidden;
+    position:relative;
+}
+
+.card img{width:100%;height:170px;object-fit:cover}
+
+.card-content{padding:15px}
+
+.sponsored{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:#f59e0b;
+    color:white;
+    padding:4px 8px;
+    font-size:12px;
+    border-radius:4px;
+}
+
+.rating{color:#f59e0b;font-weight:bold}
+
+.card button{
+    background:#10b981;color:white;border:none;padding:6px 10px;border-radius:5px;margin-top:8px;cursor:pointer
+}
+
+/* PAGINATION */
+.pagination{text-align:center;margin:20px}
+.pagination button{
+    margin:3px;padding:6px 10px;border:none;background:#2563eb;color:white;border-radius:5px;cursor:pointer
+}
+
+/* MODAL */
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+    justify-content:center;
+    align-items:center;
+    z-index:2000;
+}
+
+.modal-content{
+    background:white;
+    padding:25px;
+    width:90%;
+    max-width:600px;
+    border-radius:10px;
+    position:relative;
+}
+
+.close{
+    position:absolute;
+    right:15px;
+    top:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+/* TOP AD */
+.top-ad{
+    background:#fde68a;
+    text-align:center;
+    padding:8px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="logo">
+<div class="logo-icon"></div>
+<h2>HYD<span>interiors</span></h2>
+</div>
+
+<nav>
+<button onclick="openSignup()">Sign Up</button>
+<button onclick="openStories()">Stories</button>
+</nav>
+</header>
+
+<div class="top-ad">
+🔥 Sponsored: Elite Luxury Interiors – Hyderabad | Call Now!
+</div>
+
+<div class="hero">
+<h2>Find Trusted Interior Designers in Andhra & Telangana</h2>
+<input type="text" id="searchInput" placeholder="Search by city...">
+<button onclick="applyFilters()">Search</button>
+</div>
+
+<div class="filters">
+<select id="categoryFilter">
+<option value="">All Categories</option>
+<option>Luxury</option>
+<option>Budget</option>
+<option>Commercial</option>
+</select>
+
+<select id="ratingFilter">
+<option value="">Min Rating</option>
+<option value="3">3+</option>
+<option value="4">4+</option>
+<option value="4.5">4.5+</option>
+</select>
+
+<select id="experienceFilter">
+<option value="">Experience</option>
+<option value="5">5+ Years</option>
+<option value="10">10+ Years</option>
+</select>
+
+<button class="clear-btn" onclick="clearFilters()">Clear</button>
+
+<div class="view-toggle">
+<button id="gridBtn" class="active" onclick="setView('grid')">Grid</button>
+<button id="listBtn" onclick="setView('list')">List</button>
+</div>
+</div>
+
+<div id="resultsCount"></div>
+<div id="directory"></div>
+<div class="pagination" id="pagination"></div>
+
+<!-- PROFILE MODAL -->
+<div class="modal" id="profileModal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">X</span>
+<div id="profileDetails"></div>
+</div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="modal" id="signupModal">
+<div class="modal-content">
+<span class="close" onclick="closeSignup()">X</span>
+<h2>Create Account</h2>
+<input placeholder="Full Name" style="width:100%;padding:8px;margin:5px 0">
+<input placeholder="Email" style="width:100%;padding:8px;margin:5px 0">
+<select style="width:100%;padding:8px;margin:5px 0">
+<option>User</option>
+<option>Designer</option>
+</select>
+<button style="width:100%;background:#2563eb;color:white;padding:10px;border:none;border-radius:5px">Register</button>
+</div>
+</div>
+
+<!-- STORIES MODAL -->
+<div class="modal" id="storiesModal">
+<div class="modal-content">
+<span class="close" onclick="closeStories()">X</span>
+<h2>Customer Stories</h2>
+<p>⭐ “Amazing experience designing our dream home.”</p>
+<p>⭐ “Professional team and timely delivery.”</p>
+<p>⭐ “Best interior service in Hyderabad.”</p>
+</div>
+</div>
+
+<script>
+
+const cities=["Hyderabad","Warangal","Vijayawada","Visakhapatnam","Guntur","Tirupati"];
+const categories=["Luxury","Budget","Commercial"];
+
+let designers=[];
+let filtered=[];
+let currentPage=1;
+const perPage=20;
+let currentView="grid";
+
+for(let i=1;i<=120;i++){
+designers.push({
+name:"HYD Design Studio "+i,
+city:cities[i%cities.length],
+category:categories[i%categories.length],
+rating:(3+Math.random()*2).toFixed(1),
+reviews:Math.floor(Math.random()*80)+1,
+experience:(2+(i%12)),
+sponsored:i%15===0
+});
+}
+
+filtered=[...designers];
+
+function render(){
+const container=document.getElementById("directory");
+container.className=currentView;
+container.innerHTML="";
+
+let start=(currentPage-1)*perPage;
+let data=filtered.slice(start,start+perPage);
+
+document.getElementById("resultsCount").innerText=filtered.length+" Designers Found";
+
+data.forEach((d,i)=>{
+container.innerHTML+=`
+<div class="card">
+${d.sponsored?'<div class="sponsored">Sponsored</div>':''}
+<img src="https://source.unsplash.com/400x300/?interior&sig=${start+i}">
+<div class="card-content">
+<h3>${d.name}</h3>
+<p class="rating">⭐ ${d.rating} (${d.reviews} reviews)</p>
+<p>${d.city}</p>
+<p>${d.category}</p>
+<button onclick="openProfile(${start+i})">View Profile</button>
+</div>
+</div>`;
+});
+
+setupPagination();
+}
+
+function setupPagination(){
+let pages=Math.ceil(filtered.length/perPage);
+let p=document.getElementById("pagination");
+p.innerHTML="";
+for(let i=1;i<=pages;i++){
+p.innerHTML+=`<button onclick="goPage(${i})">${i}</button>`;
+}
+}
+
+function goPage(p){currentPage=p;render();}
+function setView(v){
+currentView=v;
+gridBtn.classList.remove("active");
+listBtn.classList.remove("active");
+document.getElementById(v+"Btn").classList.add("active");
+render();
+}
+
+function applyFilters(){
+let search=document.getElementById("searchInput").value.toLowerCase();
+let cat=document.getElementById("categoryFilter").value;
+let rate=document.getElementById("ratingFilter").value;
+let exp=document.getElementById("experienceFilter").value;
+
+filtered=designers.filter(d=>
+(d.city.toLowerCase().includes(search)||search==="") &&
+(d.category===cat||cat==="") &&
+(d.rating>=rate||rate==="") &&
+(d.experience>=exp||exp==="")
+);
+
+currentPage=1;
+render();
+}
+
+function clearFilters(){
+filtered=[...designers];
+render();
+}
+
+function openProfile(i){
+let d=filtered[i];
+document.getElementById("profileDetails").innerHTML=`
+<h2>${d.name}</h2>
+<p><strong>City:</strong> ${d.city}</p>
+<p><strong>Category:</strong> ${d.category}</p>
+<p><strong>Rating:</strong> ⭐ ${d.rating}</p>
+<p><strong>Experience:</strong> ${d.experience} Years</p>
+<p><strong>Contact:</strong> +91 9XXXXXXXXX</p>
+`;
+document.getElementById("profileModal").style.display="flex";
+}
+
+function closeModal(){profileModal.style.display="none";}
+function openSignup(){signupModal.style.display="flex";}
+function closeSignup(){signupModal.style.display="none";}
+function openStories(){storiesModal.style.display="flex";}
+function closeStories(){storiesModal.style.display="none";}
+
+render();
+
+</script>
+
+</body>
+</html>
